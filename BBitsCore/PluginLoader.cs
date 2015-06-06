@@ -25,11 +25,14 @@ namespace BBitsCore
                 if (assembly == null)
                     continue;
 
-                var types = assembly.GetTypes().Where(s => s.GetInterface(typeof(IPlugin).FullName) != null).Select(s => s as IPlugin);
+                var types = assembly.GetTypes().Where(s => s.GetInterface(typeof(IPlugin).FullName) != null);
 
                 foreach (var type in types)
-                    if (type != null)
-                        LoadPlugin(type);
+                {
+                    IPlugin instance = Activator.CreateInstance(type) as IPlugin;
+                    if (instance != null)
+                        LoadPlugin(instance);
+                }
             }
         }
 

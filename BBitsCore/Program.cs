@@ -10,7 +10,7 @@ namespace BBitsCore
 {
     class Program
     {
-        static int EntryPoint(string arguments)
+        static int EntryPoint(String pwzArgument)
         {
             string appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             PluginLoader.LoadFromDirectory(appPath + @"\plugins");
