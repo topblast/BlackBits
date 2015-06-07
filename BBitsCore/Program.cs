@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace BBitsCore
 {
-    class Program
+    public class Program
     {
-        static int EntryPoint(String pwzArgument)
+        public static int BlackBitsInitialize(String pwzArgument)
         {
             string appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             PluginLoader.LoadFromDirectory(appPath + @"\plugins");
@@ -20,7 +20,7 @@ namespace BBitsCore
 
         static void Main(string[] args)
         {
-            EntryPoint("");
+            BlackBitsInitialize("");
         }
     }
 }
