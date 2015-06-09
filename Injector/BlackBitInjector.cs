@@ -154,7 +154,7 @@ namespace Injector
             for (int i = 0; i < proc.Modules.Count; i++)
             {
                 ProcessModule mod = proc.Modules[i];
-                if (mod.ModuleName == moduleName)
+                if (mod.ModuleName.ToLower() == moduleName.ToLower())
                     return mod.BaseAddress;
             }
 

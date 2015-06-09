@@ -12,10 +12,17 @@ namespace BBitsCore
 
         string Name { get; }
 
+        string Author { get; }
+
         void OnLoad();
 
         void OnUpdate(bool enabled);
-        
-        void
+
+        void OnEnable();
+
+        void OnDisable();
+
+        void D3D9_Endscene(IntPtr pDevice);
+
     }
 }

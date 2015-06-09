@@ -36,6 +36,18 @@ namespace BBitsCore
             }
         }
 
+        public static void D3D9_Endscene(IntPtr pDevice)
+        {
+            foreach(var p in plugins)
+                p.D3D9_Endscene(pDevice);
+        }
+        /*
+        public static void D3D9_Reset(IntPtr pDevice)
+        {
+            foreach(var p in plugins)
+                p.D3D9_Endscene(pDevice);
+        }
+        */
         private static void LoadPlugin(IPlugin plugin)
         {
             plugin.OnLoad();

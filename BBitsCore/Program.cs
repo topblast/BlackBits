@@ -8,10 +8,14 @@ using System.Threading.Tasks;
 
 namespace BBitsCore
 {
+    using Hook;
     public class Program
     {
         public static int BlackBitsInitialize(String pwzArgument)
         {
+
+            DirectX9Hook hook = DirectX9Hook.Instance;
+            //hook.Initialize();
             string appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             PluginLoader.LoadFromDirectory(appPath + @"\plugins");
 
