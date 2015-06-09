@@ -41,9 +41,20 @@ namespace BBitsCore.Renderers.util
             MaxVertices = maxVertices;
             IsOpen = false;
             Buffer = null;
+            Stream = null;
         }
 
-        public abstract void Dispose();
+        public virtual void Dispose()
+        {
+            if (IsOpen)
+                End();
+
+            if (Stream != null)
+            { 
+                Stream.Dispose();
+                Stream = null;
+            }
+        }
 
         public abstract void Begin(object obj);
         

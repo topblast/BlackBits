@@ -1,0 +1,18 @@
+﻿<Window x:Class="Injector.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="BlackBits Injector" Height="350" Width="190" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid Margin="0,0,2,0">
+        <ComboBox x:Name="ProcessBox" Margin="10,41,8,0" VerticalAlignment="Top"
+                  ItemsSource="{Binding Dependency.ProcessList}"
+                  DisplayMemberPath="DisplayName"
+                  SelectedValuePath="Id"
+                  SelectedValue="{Binding Dependency.ProcessId}"
+                  IsSynchronizedWithCurrentItem="True"/>
+        <Button Content="Refresh" Margin="0,10,10,285" HorizontalAlignment="Right" Width="44" Click="Button_Click"/>
+        <Label Margin="10,10,59,0" VerticalAlignment="Top" Height="26" Content="Processes"/>
+        <Button Content="Inject" Margin="10,0,10,10" VerticalAlignment="Bottom" Click="Button_Click_1"/>
+
+    </Grid>
+</Window>

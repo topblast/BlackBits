@@ -238,14 +238,14 @@ namespace BBitsCore.Renderers
 
             public override void Dispose()
             {
-                if (IsOpen)
-                    End();
-                if (Buffer != null)
-                    Buffer.Dispose();
+                base.Dispose();
 
-                if (Stream != null)
-                    Stream.Dispose();
-                Stream = null;
+                if (Buffer != null)
+                {
+                    Buffer.Dispose();
+                    Buffer = null;
+                }
+
             }
 
             public override void Begin(object obj)
