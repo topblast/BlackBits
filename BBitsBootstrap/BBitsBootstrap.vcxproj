@@ -68,17 +68,25 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>$(ProjectName)64</TargetName>
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <TargetName>$(ProjectName)64</TargetName>
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -95,6 +103,15 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>BBitsBootstrap.def</ModuleDefinitionFile>
     </Link>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <PostBuildEvent>
+      <Command>IF NOT EXIST "$(SolutionDir)build" mkdir "$(SolutionDir)build"
+IF NOT EXIST "$(SolutionDir)build\$(PlatformName)" mkdir "$(SolutionDir)build\$(PlatformName)"
+copy "$(TargetPath)" "$(SolutionDir)build\$(PlatformName)\$(TargetFileName)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -111,6 +128,15 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>BBitsBootstrap.def</ModuleDefinitionFile>
     </Link>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <PostBuildEvent>
+      <Command>IF NOT EXIST "$(SolutionDir)build" mkdir "$(SolutionDir)build"
+IF NOT EXIST "$(SolutionDir)build\$(PlatformName)" mkdir "$(SolutionDir)build\$(PlatformName)"
+copy "$(TargetPath)" "$(SolutionDir)build\$(PlatformName)\$(TargetFileName)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -132,6 +158,15 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ModuleDefinitionFile>BBitsBootstrap.def</ModuleDefinitionFile>
     </Link>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <PostBuildEvent>
+      <Command>IF NOT EXIST "$(SolutionDir)build" mkdir "$(SolutionDir)build"
+IF NOT EXIST "$(SolutionDir)build\$(PlatformName)" mkdir "$(SolutionDir)build\$(PlatformName)"
+copy "$(TargetPath)" "$(SolutionDir)build\$(PlatformName)\$(TargetFileName)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -153,6 +188,15 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ModuleDefinitionFile>BBitsBootstrap.def</ModuleDefinitionFile>
     </Link>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <PostBuildEvent>
+      <Command>IF NOT EXIST "$(SolutionDir)build" mkdir "$(SolutionDir)build"
+IF NOT EXIST "$(SolutionDir)build\$(PlatformName)" mkdir "$(SolutionDir)build\$(PlatformName)"
+copy "$(TargetPath)" "$(SolutionDir)build\$(PlatformName)\$(TargetFileName)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />

@@ -11,9 +11,12 @@ namespace BBitsCore
     using Hook;
     public class Program
     {
+        private static bool initialize = false;
         public static int BlackBitsInitialize(String pwzArgument)
         {
-
+            if (initialize)
+                return 1;
+            initialize = true;
             DirectX9Hook hook = DirectX9Hook.Instance;
             //hook.Initialize();
             string appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

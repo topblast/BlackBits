@@ -23,6 +23,5 @@ namespace BBitsCore
         void OnDisable();
 
         void D3D9_Endscene(IntPtr pDevice);
-
     }
 }

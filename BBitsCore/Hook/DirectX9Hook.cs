@@ -64,6 +64,12 @@ namespace BBitsCore.Hook
         {
             Device device = (Device)devicePtr;
             device.Clear(ClearFlags.Target, new ColorBGRA(0xFFFF0000), 0, 0, new Rectangle[] { new Rectangle(100, 100, 100, 100) });
+
+            using (var ren = new Renderers.Direct3D9(device))
+            {
+
+            }
+            
             PluginLoader.D3D9_Endscene(devicePtr);
 
 

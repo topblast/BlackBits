@@ -40,9 +40,20 @@ __declspec(dllexport) HRESULT BlackBitsInjection(LPUTSTR lpArguments)
 	if (FAILED(hr = pClrRuntimeHost->ExecuteInDefaultAppDomain(buffer, L"BBitsCore.Program", L"BlackBitsInitialize", L"", &pReturnValue)))
 		return hr;
 
-	if (pReturnValue != 0)
+	if (pReturnValue == 0)
+	{
+		// All good
+	}
+	else if (pReturnValue == 1)
+	{
+		//Already Running
+		MessageBoxW(nullptr, L"BlackBits is already running on this process.", L"BlackBits", 0);
+	}
+	else
+	{
 		// Error
-		;
+		
+	}
 
 	return hr;
 }

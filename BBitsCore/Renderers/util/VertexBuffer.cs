@@ -49,10 +49,10 @@ namespace BBitsCore.Renderers.util
             if (IsOpen)
                 End();
 
-            if (Stream != null)
-            { 
-                Stream.Dispose();
-                Stream = null;
+            if (_stream != null)
+            {
+                _stream.Dispose();
+                _stream = null;
             }
         }
 

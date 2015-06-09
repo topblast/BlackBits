@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestPlugin
 {
-    using BBitsCore;
-
-    public class TestPlugin : IPlugin
+    public class TestPlugin :BBitsCore.IPlugin
     {
         public string Name { get { return "TestPlugin"; } }
 

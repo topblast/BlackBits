@@ -11,7 +11,7 @@
     <AssemblyName>BBitsCore</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>9eb24f9f</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>0fedb3a8</NuGetPackageImportStamp>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
   </PropertyGroup>
@@ -75,6 +75,9 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EasyHook">
@@ -148,4 +151,30 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <UsingTask TaskName="ILMerge.MSBuild.Tasks.ILMerge" AssemblyFile="$(SolutionDir)\packages\ILMerge.MSBuild.Tasks.1.0.0.3\tools\ILMerge.MSBuild.Tasks.dll" />
+  <Target Name="PostBuildEvent">
+    <ItemGroup>
+      <MergeAsm Include="$(OutputPath)$(TargetFileName)" />
+	  
+      <MergeAsm Include="$(OutputPath)SharpDX.dll" />
+      <MergeAsm Include="$(OutputPath)SharpDX.DXGI.dll" />
+      <MergeAsm Include="$(OutputPath)SharpDX.D3DCompiler.dll" />
+      <MergeAsm Include="$(OutputPath)SharpDX.Direct3D11.dll" />
+      <MergeAsm Include="$(OutputPath)SharpDX.Direct3D10.dll" />
+      <MergeAsm Include="$(OutputPath)SharpDX.Direct3D9.dll" />
+      <MergeAsm Include="$(OutputPath)EasyHook.dll" />
+    </ItemGroup>
+    <PropertyGroup>
+      <MergedAssembly>$(ProjectDir)$(OutDir)$(TargetFileName)</MergedAssembly>
+    </PropertyGroup>
+    <Message Text="ILMerge @(MergeAsm) -&gt; $(MergedAssembly)" Importance="high" />
+    <ILMerge InputAssemblies="@(MergeAsm)" OutputFile="$(MergedAssembly)" TargetKind="SameAsPrimaryAssembly" />
+	<Exec command="$(PostBuildEvent)" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>IF NOT EXIST "$(SolutionDir)build" mkdir "$(SolutionDir)build"
+IF NOT EXIST "$(SolutionDir)build\$(PlatformName)" mkdir "$(SolutionDir)build\$(PlatformName)"
+copy "$(TargetDir)*.dll" "$(SolutionDir)build\$(PlatformName)\"
+copy "$(TargetPath)" "$(SolutionDir)build\$(PlatformName)\$(TargetFileName)"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
