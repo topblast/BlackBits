@@ -174,7 +174,8 @@
   <PropertyGroup>
     <PostBuildEvent>IF NOT EXIST "$(SolutionDir)build" mkdir "$(SolutionDir)build"
 IF NOT EXIST "$(SolutionDir)build\$(PlatformName)" mkdir "$(SolutionDir)build\$(PlatformName)"
-copy "$(TargetDir)*.dll" "$(SolutionDir)build\$(PlatformName)\"
+copy "$(TargetDir)EasyHook32.dll" "$(SolutionDir)build\$(PlatformName)\"
+copy "$(TargetDir)EasyHook64.dll" "$(SolutionDir)build\$(PlatformName)\"
 copy "$(TargetPath)" "$(SolutionDir)build\$(PlatformName)\$(TargetFileName)"</PostBuildEvent>
   </PropertyGroup>
 </Project>
