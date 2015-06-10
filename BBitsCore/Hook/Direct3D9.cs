@@ -11,27 +11,28 @@ using EasyHook;
 
 namespace BBitsCore.Hook
 {
-    sealed class DirectX9Hook : IHook
+    sealed class Direct3D9 : IHook
     {
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         delegate int IDirect3D9Device_EndSceneDelegate(IntPtr devicePtr);
 
         LocalHook endSceneHook;
 
-        private DirectX9Hook()
+        private Direct3D9()
         {
             endSceneHook = null;
         }
 
-        private static DirectX9Hook _instance = null;
-        public static DirectX9Hook Instance
+        private static Direct3D9 _instance = null;
+        public static Direct3D9 Instance
         {
             get
             {
                 if (_instance == null)
                 {
-                    _instance = new DirectX9Hook();
-                    _instance.Initialize();
+                    _instance = new Direct3D9();
+                    if (!_instance.Initialize())
+                        _instance = null;
                 }
                 return _instance;
             }
@@ -39,6 +40,9 @@ namespace BBitsCore.Hook
 
         public override bool Initialize()
         {
+            if (NativeAPI.GetModuleHandle("d3d9.dll") == IntPtr.Zero)
+                return false;
+
             Dispose();
             Device device;
             List<IntPtr> vtable = new List<IntPtr>();

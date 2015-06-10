@@ -112,8 +112,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Hook\DirectX9Hook.cs" />
-    <Compile Include="Hook\DXGIHook.cs" />
+    <Compile Include="Hook\Direct3D10.cs" />
+    <Compile Include="Hook\Direct3D11.cs" />
+    <Compile Include="Hook\Direct3D9.cs" />
+    <Compile Include="Hook\DXGIBase.cs" />
     <Compile Include="Hook\IHook.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="PluginLoader.cs" />
@@ -152,10 +154,9 @@
   </Target>
   -->
   <UsingTask TaskName="ILMerge.MSBuild.Tasks.ILMerge" AssemblyFile="$(SolutionDir)\packages\ILMerge.MSBuild.Tasks.1.0.0.3\tools\ILMerge.MSBuild.Tasks.dll" />
-  <Target Name="PostBuildEvent">
+  <Target Name="PostBuildEvent" Condition="'$(Configuration)' == 'Release'">
     <ItemGroup>
       <MergeAsm Include="$(OutputPath)$(TargetFileName)" />
-	  
       <MergeAsm Include="$(OutputPath)SharpDX.dll" />
       <MergeAsm Include="$(OutputPath)SharpDX.DXGI.dll" />
       <MergeAsm Include="$(OutputPath)SharpDX.D3DCompiler.dll" />
@@ -167,9 +168,10 @@
     <PropertyGroup>
       <MergedAssembly>$(ProjectDir)$(OutDir)$(TargetFileName)</MergedAssembly>
     </PropertyGroup>
+    <Exec command="copy $(OutputPath)$(TargetFileName) $(OutputPath)ORIG_$(TargetFileName)" />
     <Message Text="ILMerge @(MergeAsm) -&gt; $(MergedAssembly)" Importance="high" />
     <ILMerge InputAssemblies="@(MergeAsm)" OutputFile="$(MergedAssembly)" TargetKind="SameAsPrimaryAssembly" />
-	<Exec command="$(PostBuildEvent)" />
+    <Exec command="$(PostBuildEvent)" />
   </Target>
   <PropertyGroup>
     <PostBuildEvent>IF NOT EXIST "$(SolutionDir)build" mkdir "$(SolutionDir)build"
