@@ -90,6 +90,9 @@
     <Reference Include="SharpDX.D3DCompiler">
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.D3DCompiler.dll</HintPath>
     </Reference>
+    <Reference Include="SharpDX.Direct2D1">
+      <HintPath>$(SharpDXPackageBinDir)\SharpDX.Direct2D1.dll</HintPath>
+    </Reference>
     <Reference Include="SharpDX.Direct3D10">
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.Direct3D10.dll</HintPath>
     </Reference>
@@ -161,6 +164,7 @@
       <MergeAsm Include="$(OutputPath)SharpDX.Direct3D11.dll" />
       <MergeAsm Include="$(OutputPath)SharpDX.Direct3D10.dll" />
       <MergeAsm Include="$(OutputPath)SharpDX.Direct3D9.dll" />
+      <MergeAsm Include="$(OutputPath)SharpDX.Direct2D1.dll" />
       <MergeAsm Include="$(OutputPath)EasyHook.dll" />
     </ItemGroup>
     <PropertyGroup>

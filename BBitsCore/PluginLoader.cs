@@ -5,6 +5,8 @@ using System.Reflection;
 using System.Text;
 using System.IO;
 using System.Threading.Tasks;
+
+using SharpDX.DXGI;
 using Device9 = SharpDX.Direct3D9.Device;
 using Device10 = SharpDX.Direct3D10.Device;
 using Device11 = SharpDX.Direct3D11.Device;
@@ -60,46 +62,46 @@ namespace BBitsCore
             }
         }
 
-        public void Resize(Device10 device)
+        public void Resize(Device10 device, SwapChain swapChain)
         {
             lock (Plugins)
             {
                 foreach (var con in Plugins)
                 {
-                    con.Plugin.D3D10_Resize(device);
+                    con.Plugin.D3D10_Resize(device, swapChain);
                 }
             }
         }
 
-        public void Present(Device10 device)
+        public void Present(Device10 device, SwapChain swapChain)
         {
             lock (Plugins)
             {
                 foreach (var con in Plugins)
                 {
-                    con.Plugin.D3D10_Present(device);
+                    con.Plugin.D3D10_Present(device, swapChain);
                 }
             }
         }
 
-        public void Resize(Device11 device)
+        public void Resize(Device11 device, SwapChain swapChain)
         {
             lock (Plugins)
             {
                 foreach (var con in Plugins)
                 {
-                    con.Plugin.D3D11_Resize(device);
+                    con.Plugin.D3D11_Resize(device, swapChain);
                 }
             }
         }
 
-        public void Present(Device11 device)
+        public void Present(Device11 device, SwapChain swapChain)
         {
             lock (Plugins)
             {
                 foreach (var con in Plugins)
                 {
-                    con.Plugin.D3D11_Present(device);
+                    con.Plugin.D3D11_Present(device, swapChain);
                 }
             }
         }

@@ -120,11 +120,11 @@ namespace BBitsCore.Hook
                 switch (group.Version)
                 {
                     case DirectXVersion.DirectX11:
-                        Direct3D11.Resize(pSwapChain, group.Device as Device11_0, bufferCount, width, height, format, flag);
+                        Direct3D11.Resize(swapChain, group.Device as Device11_0, bufferCount, width, height, format, flag);
                         break;
                     case DirectXVersion.DirectX10_1:
                     case DirectXVersion.DirectX10:
-                        Direct3D10.Resize(pSwapChain, group.Device as Device10_0, bufferCount, width, height, format, flag);
+                        Direct3D10.Resize(swapChain, group.Device as Device10_0, bufferCount, width, height, format, flag);
                         break;
                     default:
                         throw new NotImplementedException();
@@ -177,11 +177,11 @@ namespace BBitsCore.Hook
                 switch (group.Version)
                 {
                     case DirectXVersion.DirectX11:
-                        Direct3D11.Present(pSwapChain, group.Device as Device11_0, syncInterval, flags);
+                        Direct3D11.Present(swapChain, group.Device as Device11_0, syncInterval, flags);
                         break;
                     case DirectXVersion.DirectX10_1:
                     case DirectXVersion.DirectX10:
-                        Direct3D10.Present(pSwapChain, group.Device as Device10_0, syncInterval, flags);
+                        Direct3D10.Present(swapChain, group.Device as Device10_0, syncInterval, flags);
                         break;
                     default:
                         throw new NotImplementedException();

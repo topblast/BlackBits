@@ -15,17 +15,23 @@ namespace BBitsCore
     {
         internal static volatile bool IsRunning = false;
         private static BlackBits _instance = null;
-
+        private static Thread bbThread;
         public static void RunBlackBits()
         {
             if (IsRunning == true && _instance != null)
                 return;
 
-            using (BlackBits core = new BlackBits())
+            BlackBits bcore = new BlackBits();
+
+            bbThread = new Thread(new ThreadStart(() =>
             {
-                IsRunning = true;
-                core.DoLoop();
-            }
+                using (BlackBits core = bcore)
+                {
+                    _instance = core;
+                    IsRunning = true;
+                    core.DoLoop();
+                }
+            }));
         }
 
         public static PluginLoader Loader { get; private set; }

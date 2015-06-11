@@ -14,8 +14,8 @@ namespace BBitsCore.Hook
 {
     sealed class Direct3D10 : DXGIBase
     {
-        public delegate void OnResizeDelegate(Device device);
-        public delegate void OnPresentDelegate(Device device);
+        public delegate void OnResizeDelegate(Device device, SwapChain swapChain);
+        public delegate void OnPresentDelegate(Device device, SwapChain swapChain);
         
         public static event OnResizeDelegate OnResize;
         public static event OnPresentDelegate OnPresent;
@@ -52,16 +52,16 @@ namespace BBitsCore.Hook
             return device != null && chain != null;
         }
 
-        public static void Resize(IntPtr pSwapChain, Device device, int bufferCount, int width, int height, Format format, SwapChainFlags flag)
+        public static void Resize(SwapChain swapChain, Device device, int bufferCount, int width, int height, Format format, SwapChainFlags flag)
         {
             if (OnResize != null)
-                OnResize(device);
+                OnResize(device, swapChain);
         }
 
-        public static void Present(IntPtr pSwapChain, Device device, int syncInterval, PresentFlags flags)
+        public static void Present(SwapChain swapChain, Device device, int syncInterval, PresentFlags flags)
         {
             if (OnPresent != null)
-                OnPresent(device);
+                OnPresent(device, swapChain);
         }
     }
 }
