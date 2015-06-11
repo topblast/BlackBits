@@ -55,6 +55,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -112,6 +113,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlackBIts.cs" />
     <Compile Include="Hook\Direct3D10.cs" />
     <Compile Include="Hook\Direct3D11.cs" />
     <Compile Include="Hook\Direct3D9.cs" />
@@ -121,10 +123,6 @@
     <Compile Include="PluginLoader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Renderers\Direct3D9.cs" />
-    <Compile Include="Renderers\Font.cs" />
-    <Compile Include="Renderers\Renderer.cs" />
-    <Compile Include="Renderers\util\VertexBuffer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

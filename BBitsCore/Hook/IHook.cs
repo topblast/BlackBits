@@ -7,13 +7,23 @@ using System.Threading.Tasks;
 
 namespace BBitsCore.Hook
 {
-    abstract class IHook : IDisposable
+    public abstract class IHook : IDisposable
     {
+        internal static IList<IHook> Hooks = new List<IHook>();
+
+        public IHook()
+        {
+            Hooks.Add(this);
+        }
+
         public abstract bool Initialize();
 
-        public abstract void Dispose();
+        public virtual void Dispose()
+        {
+            Hooks.Remove(this);
+        }
 
-        protected static IntPtr[] GetVTblAddresses(IntPtr pointer, int numberOfMethods)
+        public static IntPtr[] GetVTblAddresses(IntPtr pointer, int numberOfMethods)
         {
             List<IntPtr> vtables = new List<IntPtr>();
 
@@ -24,7 +34,7 @@ namespace BBitsCore.Hook
             return vtables.ToArray();
         }
 
-        protected static IntPtr[] GetVTblAddresses(IntPtr pointer, int startIndex, int numberOfMethods)
+        public static IntPtr[] GetVTblAddresses(IntPtr pointer, int startIndex, int numberOfMethods)
         {
             List<IntPtr> vtables = new List<IntPtr>();
 

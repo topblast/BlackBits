@@ -5,29 +5,29 @@ using System.Text;
 using System.Threading.Tasks;
 
 using SharpDX;
-using SharpDX.Direct3D;
-using SharpDX.Direct3D11;
+using SharpDX.Direct3D10;
 using EasyHook;
 using SharpDX.DXGI;
-using Device = SharpDX.Direct3D11.Device;
+using Device = SharpDX.Direct3D10.Device;
+
 namespace BBitsCore.Hook
 {
-    sealed class Direct3D11 : DXGIBase
+    sealed class Direct3D10 : DXGIBase
     {
         public delegate void OnResizeDelegate(Device device);
         public delegate void OnPresentDelegate(Device device);
-
+        
         public static event OnResizeDelegate OnResize;
         public static event OnPresentDelegate OnPresent;
 
-        private static Direct3D11 _instance = null;
-        public static Direct3D11 Instance
+        private static Direct3D10 _instance = null;
+        public static Direct3D10 Instance
         {
             get
             {
                 if (_instance == null)
                 {
-                    _instance = new Direct3D11();
+                    _instance = new Direct3D10();
                     if (!_instance.Initialize())
                         _instance = null;
                 }
@@ -40,7 +40,7 @@ namespace BBitsCore.Hook
             device = null;
             chain = null;
 
-            if (NativeAPI.GetModuleHandle("d3d11.dll") == IntPtr.Zero)
+            if (NativeAPI.GetModuleHandle("d3d10.dll") == IntPtr.Zero)
                 return false;
 
             Device dev = null;

@@ -82,6 +82,54 @@ namespace BBitsCore.Hook
         private int ResizeBuffer(IntPtr pSwapChain, int bufferCount, int width, int height, Format format, SwapChainFlags flag)
         {
             SwapChain swapChain = (SwapChain)pSwapChain;
+            DeviceGroup group;
+
+            if (!Devices.ContainsKey(pSwapChain))
+            {
+                group = new DeviceGroup();
+
+                try
+                {
+                    group = new DeviceGroup()
+                    {
+                        Device = swapChain.GetDevice<Device10_0>(),
+                        Version = DirectXVersion.DirectX10
+                    };
+                }
+                catch
+                {
+                    try
+                    {
+                        group = new DeviceGroup()
+                        {
+                            Device = swapChain.GetDevice<Device11_0>(),
+                            Version = DirectXVersion.DirectX11
+                        };
+                    }
+                    catch
+                    {
+                    }
+                }
+
+                if (group.Device != null && group.Version != DirectXVersion.Unknown)
+                    Devices.Add(pSwapChain, group);
+            }
+
+            if (Devices.TryGetValue(pSwapChain, out group))
+            {
+                switch (group.Version)
+                {
+                    case DirectXVersion.DirectX11:
+                        Direct3D11.Resize(pSwapChain, group.Device as Device11_0, bufferCount, width, height, format, flag);
+                        break;
+                    case DirectXVersion.DirectX10_1:
+                    case DirectXVersion.DirectX10:
+                        Direct3D10.Resize(pSwapChain, group.Device as Device10_0, bufferCount, width, height, format, flag);
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
 
             swapChain.ResizeBuffers(bufferCount, width, height, format, flag);
             return SharpDX.Result.Ok.Code;
@@ -119,14 +167,6 @@ namespace BBitsCore.Hook
                     {
                     }
                 }
-                //if (group.Device == null)
-                //{
-                //    group = new DeviceGroup()
-                //    {
-                //        Device = swapChain.GetDevice<Device10_1>(),
-                //        Version = DirectXVersion.DirectX10_1
-                //    };
-                //}
 
                 if (group.Device != null && group.Version != DirectXVersion.Unknown)
                     Devices.Add(pSwapChain, group);
@@ -154,6 +194,8 @@ namespace BBitsCore.Hook
 
         public override void Dispose()
         {
+            base.Dispose();
+
             if (swapResizeHook != null)
             {
                 swapResizeHook.Dispose();

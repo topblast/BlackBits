@@ -23,8 +23,8 @@ namespace BBitsCore
                     hook = Direct3D11.Instance;
                 if (hook == null)
                     hook = Direct3D10.Instance;
-                //hook.Initialize();
-                string appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                
+                string appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location); 
                 PluginLoader.LoadFromDirectory(appPath + @"\plugins");
                 initialize = true;
             } catch (Exception e)

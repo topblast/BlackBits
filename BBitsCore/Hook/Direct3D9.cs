@@ -16,11 +16,22 @@ namespace BBitsCore.Hook
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         delegate int IDirect3D9Device_EndSceneDelegate(IntPtr devicePtr);
 
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        delegate int IDirect3D9Device_ResetDelegate(IntPtr devicePtr, PresentParameters[] parameters);
+
+        public delegate void OnEndSceneDelegate(Device device);
+        public delegate void OnResetDelegate(Device device);
+
         LocalHook endSceneHook;
+        LocalHook resetHook;
+
+        public static event OnResetDelegate OnReset;
+        public static event OnEndSceneDelegate OnEndScene;
 
         private Direct3D9()
         {
             endSceneHook = null;
+            resetHook = null;
         }
 
         private static Direct3D9 _instance = null;
@@ -59,7 +70,10 @@ namespace BBitsCore.Hook
                 }
             }
 
+            resetHook = LocalHook.Create(vtable[16], new IDirect3D9Device_ResetDelegate(Reset), this);
             endSceneHook = LocalHook.Create(vtable[42], new IDirect3D9Device_EndSceneDelegate(EndScene), this);
+
+            resetHook.ThreadACL.SetExclusiveACL(new int[1]);
             endSceneHook.ThreadACL.SetExclusiveACL(new int[1]);
             return true;
         }        
@@ -67,23 +81,31 @@ namespace BBitsCore.Hook
         int EndScene(IntPtr devicePtr)
         {
             Device device = (Device)devicePtr;
-            device.Clear(ClearFlags.Target, new ColorBGRA(0xFFFF0000), 0, 0, new Rectangle[] { new Rectangle(100, 100, 100, 100) });
 
-            using (var ren = new Renderers.Direct3D9(device))
-            {
-
-            }
-            
-            PluginLoader.D3D9_Endscene(devicePtr);
-
+            if (OnEndScene != null)
+                OnEndScene(device);
 
             device.EndScene();
             
             return SharpDX.Result.Ok.Code;
         }
+
+        int Reset(IntPtr devicePtr, PresentParameters[] parameters)
+        {
+            Device device = (Device)devicePtr;
+            
+            if (OnReset != null)
+                OnReset(device);
+
+            device.Reset(parameters);
+
+            return SharpDX.Result.Ok.Code;
+        }
         
         public override void Dispose()
         {
+            base.Dispose();
+
             if (endSceneHook != null)
             {
                 endSceneHook.Dispose();

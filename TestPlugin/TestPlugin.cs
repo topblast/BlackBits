@@ -33,7 +33,7 @@ namespace TestPlugin
         {
             System.Windows.Forms.MessageBox.Show(this.Name + " was Disabled!", this.Identifier);
         }
-
+        
         public void D3D9_Endscene(IntPtr pDevice)
         {
         }
